@@ -1,19 +1,23 @@
-# Используем .NET SDK для сборки
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+# Устанавливаем SDK .NET
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 
-# Копируем файлы проекта и восстанавливаем зависимости
-COPY *.sln ./
-COPY Fashion_Company/*.csproj ./Fashion_Company/
-RUN dotnet restore
-
-# Копируем весь проект и собираем
-COPY . .
-WORKDIR /src/Fashion_Company
-RUN dotnet publish -c Release -o /app/publish
-
-# Используем .NET Runtime для запуска
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+# Устанавливаем рабочую директорию
 WORKDIR /app
-COPY --from=build /app/publish .
+
+# Копируем файлы
+COPY . .
+
+# Восстанавливаем зависимости
+RUN dotnet restore "./Fashion_Company.sln"
+
+# Сборка
+RUN dotnet publish "Fashion_Company/Fashion_Company.csproj" -c Release -o /app/publish
+
+# Используем минимальный runtime-образ
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
+WORKDIR /app
+COPY --from=build-env /app/publish .
+
 ENTRYPOINT ["dotnet", "Fashion_Company.dll"]
+
