@@ -1,4 +1,4 @@
-WORKDIR /src
+WORKDIR /.
 
 # Копируем решение
 COPY Fashion_Company.sln ./
