@@ -9,7 +9,7 @@ RUN dotnet restore
 
 # Копируем весь проект и собираем
 COPY . .
-WORKDIR /src/Fashion_Company
+WORKDIR ./Fashion_Company
 RUN dotnet publish -c Release -o /app/publish
 
 # Используем .NET Runtime для запуска
