@@ -6,7 +6,7 @@ WORKDIR /src
 
 # Копируем файл решения и проект
 COPY *.sln ./
-COPY Fashion_Company/Fashion_Company.csproj ./Fashion_Company/
+COPY ./Fashion_Company.csproj ./Fashion_Company/
 
 # Восстанавливаем зависимости
 RUN dotnet restore
