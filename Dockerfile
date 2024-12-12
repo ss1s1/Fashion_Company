@@ -1,20 +1,16 @@
-# Используем образ SDK .NET для сборки
+# Используем официальный образ SDK для сборки
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем только необходимые файлы для восстановления зависимостей
-COPY *.sln ./
-COPY Fashion_Company/*.csproj ./Fashion_Company/
+# Копируем все файлы проекта
+COPY . . 
 
 # Восстанавливаем зависимости
 RUN dotnet restore "./Fashion_Company.sln"
 
-# Копируем оставшиеся файлы проекта
-COPY . .
-
-# Сборка и публикация
+# Публикуем приложение
 RUN dotnet publish "Fashion_Company/Fashion_Company.csproj" -c Release -o /app/publish
 
 # Используем минимальный runtime-образ
