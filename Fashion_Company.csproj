@@ -52,6 +52,7 @@
 		<Content Include="Views\Shared\FormsAccount.cshtml" />
 		<Content Include="Views\Shared\FormsCard.cshtml" />
 		<Content Include="Views\Shared\HeaderAccount.cshtml" />
+                <Content Include="wwwroot\images\**\*" CopyToOutputDirectory="PreserveNewest" />
 		<Content Include="wwwroot\css\admin.css">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
