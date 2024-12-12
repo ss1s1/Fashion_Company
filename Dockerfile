@@ -1,24 +1,20 @@
-# Устанавливаем SDK .NET
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
-
-# Устанавливаем рабочую директорию
+# Указываем базовый образ
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
 WORKDIR /app
 
-# Копируем файлы
-COPY . .
+# Копируем файлы проекта
+COPY . ./
 
 # Восстанавливаем зависимости
 RUN dotnet restore "./Fashion_Company.sln"
 
-# Сборка
-RUN dotnet publish "Fashion_Company.csproj" -c Release -o /app/publish
+# Сборка приложения
+RUN dotnet publish "./Fashion_Company.sln" -c Release -o /out
 
-# Используем минимальный runtime-образ
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-
+# Стартовый образ для выполнения
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
-COPY --from=build-env /app/publish .
-
+COPY --from=build-env /out .
 ENTRYPOINT ["dotnet", "Fashion_Company.dll"]
 
 
