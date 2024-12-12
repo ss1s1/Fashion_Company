@@ -1,19 +1,33 @@
-WORKDIR /.
+# Указываем базовый образ .NET SDK для сборки
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
-# Копируем решение
-COPY Fashion_Company.sln ./
+# Указываем рабочую директорию
+WORKDIR /src
 
-# Копируем проект
-COPY Fashion_Company.csproj ./
+# Копируем файл решения и проект
+COPY *.sln ./
+COPY Fashion_Company/Fashion_Company.csproj ./Fashion_Company/
 
 # Восстанавливаем зависимости
 RUN dotnet restore
 
-# Копируем остальные файлы
+# Копируем оставшиеся файлы
 COPY . .
 
-# Сборка
-WORKDIR /src
-RUN dotnet publish -c Release -o /app/publish
+# Сборка проекта в Release-режиме
+RUN dotnet publish Fashion_Company/Fashion_Company.csproj -c Release -o /app/publish
+
+# Указываем базовый образ .NET Runtime для выполнения
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем собранное приложение из предыдущего этапа
+COPY --from=build /app/publish .
+
+# Указываем команду запуска приложения
+ENTRYPOINT ["dotnet", "Fashion_Company.dll"]
+
 
 
