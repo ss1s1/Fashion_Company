@@ -1,32 +1,24 @@
-# Указываем базовый образ для SDK
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Устанавливаем SDK .NET
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 
-# Рабочая директория
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем только файлы проекта
-COPY *.sln ./
-COPY Fashion_Company/Fashion_Company.csproj ./Fashion_Company/
-
-# Выполняем восстановление зависимостей
-RUN dotnet restore
-
-# Копируем остальные файлы
+# Копируем файлы
 COPY . .
 
-# Сборка приложения
-RUN dotnet publish Fashion_Company/Fashion_Company.csproj -c Release -o /app/publish
+# Восстанавливаем зависимости
+RUN dotnet restore "./Fashion_Company.sln"
 
-# Переходим к образу для выполнения
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+# Сборка
+RUN dotnet publish "Fashion_Company.csproj" -c Release -o /app/publish
 
-# Рабочая директория
+# Используем минимальный runtime-образ
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
 WORKDIR /app
+COPY --from=build-env /app/publish .
 
-# Копируем собранное приложение
-COPY --from=build /app/publish .
-
-# Запуск приложения
 ENTRYPOINT ["dotnet", "Fashion_Company.dll"]
 
 
