@@ -1,0 +1,73 @@
+﻿.user-block {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.catalog-toggle-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.user-catalogs {
+    flex-direction: row;
+    margin-top: 10px;
+    align-items: center;
+    margin-left: 30px;
+    display: flex; /* Включаем flexbox для контейнера */
+    flex-wrap: wrap; /* Элементы будут оборачиваться, если не помещаются в строку */
+    gap: 16px; /* Отступы между элементами */
+    justify-content: flex-start; /* Выравнивание элементов по левому краю */
+}
+
+.catalog-item {
+    border: 1px solid #ddd;
+    align-items: center;
+    width: calc(25% - 30px); /* Задаем ширину для 3 элементов в строке, с учетом отступов */
+    display: flex; /* Для корректного расположения содержимого внутри элемента */
+    flex-direction: column; /* Элементы внутри каталога (изображение, название и дата) будут располагаться по вертикали */
+    margin-bottom: 10px; /* Отступ снизу */
+    background-color: #f1f1f1; /* Фон для каждого каталога */
+    padding: 10px; /* Отступы внутри элемента */
+    border-radius: 8px; /* Скругленные углы */
+    border: 1px solid #ddd; /* Граница для элементов */
+}
+
+.catalog-img {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.catalog-info h4 {
+    margin: 20px;
+    font-size: 16px;
+}
+
+.catalog-info p {
+    margin: 5px 0;
+    font-size: 12px;
+}

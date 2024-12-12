@@ -1,0 +1,89 @@
+﻿<!-- Модальное окно для авторизации -->
+<div id="loginModal" class="modal fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Вход</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" action="/User/Login" method="post">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Почта</label>
+                        <input type="email" class="form-control" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="loginPassword" name="password" required>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="reset" class="btn btn-secondary" form="loginForm">Очистить</button>
+                        <button type="submit" class="btn btn-primary w-50" form="loginForm">Войти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для регистрации -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Регистрация</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" action="/User/Register" method="post" enctype="multipart/form-data">
+                    <!-- Фото профиля -->
+                    <div class="mb-3 text-center">
+                        <label for="profileImageInput" class="form-label">Фото профиля</label>
+                        <div class="profile-image-container mb-2">
+                            <img id="profilePreview"
+                                 src="https://via.placeholder.com/150"
+                                 alt="Preview"
+                                 class="rounded-circle"
+                                 style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
+                        <input type="file" class="form-control" id="profileImageInput" name="profileImage" accept="image/*">
+                    </div>
+
+                    <!-- Поля регистрации -->
+                    <div class="mb-3">
+                        <label for="registerName" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="registerName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Почта</label>
+                        <input type="email" class="form-control" id="registerEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="registerPassword" name="passwordHash" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerConfirmPassword" class="form-label">Подтвердите пароль</label>
+                        <input type="password" class="form-control" id="registerConfirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="reset" class="btn btn-secondary" form="registerForm">Очистить</button>
+                        <button type="submit" class="btn btn-success w-50" form="registerForm">Зарегистрироваться</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loginNotification" class="alert alert-login" role="alert">
+    Login to account successfully!
+</div>
+
+<div id="registerNotification" class="alert alert-register" role="alert">
+    Account created successfully!
+</div>
+
+<div id="logoutNotification" class="alert alert-logout" role="alert">
+    Logout from account successfully!
+</div>

@@ -1,0 +1,112 @@
+﻿@* Views/Home/Index.cshtml *@
+@model Fashion_Company.Models.Catalog
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/notification.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/scripts.js" defer></script>
+    <script src="~/js/card.js" defer></script>
+    <script src="~/js/account.js" defer></script>
+    <title>Fashion Company</title>
+
+</head>
+
+<body>
+    <header class="d-flex justify-content-between align-items-center p-3">
+        <img class="logo" src="/images/logo.png" alt="Fashion Company">
+        <div class="d-flex align-items-center">
+            
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-danger">Admin Panel</a>
+                <form action="@Url.Action("ExitAdminMode", "User")" method="post" style="display:inline; margin: 20px;">
+                    <button type="submit" class="btn btn-secondary">Выйти из режима администратора</button>
+                </form>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Catalog")"
+                   class="btn btn-primary me-3">
+                    Посмотреть каталоги
+                </a>
+
+                @await Html.PartialAsync("HeaderAccount")
+            }
+
+        </div>
+    </header>
+
+    <main>
+        <!-- Карусель изображений -->
+        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/slide1.png" class="d-block w-100 main-image" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/slide2.png" class="d-block w-100 main-image" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/slide3.png" class="d-block w-100 main-image" alt="Slide 3">
+                </div>
+            </div>
+
+            <!-- Элементы управления -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <p class="main-title">
+            Discover the latest fashion trends with our exclusive collections
+        </p>
+
+        <div class="description-container">
+            <img src="/images/4.jpg" alt="Лого" class="description-img">
+            <div class="description-text">
+                <p>
+                    A fashion trend signifies a specific look or expression that is spread across a population at a specific time and place. A trend is considered a more ephemeral look, not defined by the seasons when collections are released by the fashion industry. A trend can thus emerge from street style, across cultures, and from influencers and other celebrities.
+                    Fashion trends are influenced by several factors, including cinema, celebrities, climate, creative explorations, innovations, designs, political, economic, social, and technological. Examining these factors is called a PEST analysis. Fashion forecasters can use this information to help determine the growth or decline of a particular trend.
+                    Fashion is inherently a social phenomenon. A person cannot have a fashion by oneself, but for something to be defined as fashion, there needs to be dissemination and followers. This dissemination can take several forms; from the top-down ("trickle-down") to bottom-up ("bubble up/trickle-up"), or transversally across cultures and through viral memes and media ("trickle-across").
+                </p>
+            </div>
+        </div>
+
+        <div class="description-container">
+            <div class="description-text">
+                <p>
+                    A fashion trend signifies a specific look or expression that is spread across a population at a specific time and place. A trend is considered a more ephemeral look, not defined by the seasons when collections are released by the fashion industry. A trend can thus emerge from street style, across cultures, and from influencers and other celebrities.
+                    Fashion trends are influenced by several factors, including cinema, celebrities, climate, creative explorations, innovations, designs, political, economic, social, and technological. Examining these factors is called a PEST analysis. Fashion forecasters can use this information to help determine the growth or decline of a particular trend.
+                    Fashion is inherently a social phenomenon. A person cannot have a fashion by oneself, but for something to be defined as fashion, there needs to be dissemination and followers. This dissemination can take several forms; from the top-down ("trickle-down") to bottom-up ("bubble up/trickle-up"), or transversally across cultures and through viral memes and media ("trickle-across").
+                </p>
+            </div>
+            <img src="/images/foto2.png" alt="Лого" class="description-img">
+        </div>
+    </main>
+
+    <div id="scrollToTop" class="scroll-to-top">
+        🡡
+    </div>
+
+    @await Html.PartialAsync("FormsAccount")
+
+    @await Html.PartialAsync("Footer")
+
+</body>
+</html>
+

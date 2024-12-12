@@ -1,0 +1,33 @@
+﻿@if (Context.Session.GetString("UserId") != null)
+{
+    <div class="dropdown d-flex align-items-center">
+        <img src="@Context.Session.GetString("UserImage")" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            @Context.Session.GetString("UserName")
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+            <li>
+                <div class="dropdown-item text-center">
+                    <img src="@Context.Session.GetString("UserImage")" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                    <p class="mb-1"><strong>@Context.Session.GetString("UserName")</strong></p>
+                </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <a href="#" class="dropdown-item text-danger" onclick="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
+}
+else
+{
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Аккаунт
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button></li>
+            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</button></li>
+        </ul>
+    </div>
+}

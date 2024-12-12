@@ -1,0 +1,79 @@
+﻿<!-- Модальное окно создания -->
+<div id="createCatalogModal" class="modal fade" tabindex="-1" aria-labelledby="createCatalogModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCatalogModalLabel">Create Catalog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createCatalogForm">
+                    <div class="mb-3">
+                        <label for="catalogName" class="form-label">Catalog Name</label>
+                        <input type="text" class="form-control" id="catalogName" name="name" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="catalogDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="catalogDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="catalogImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="catalogImage" name="image" required />
+                    </div>
+                    <input type="hidden" id="catalogAuthor" name="author" value="Anonymous" />
+                    <!-- Поле с текущей датой создания -->
+                    <input type="hidden" id="catalogCreatedDate" name="createdDate" value="@DateTime.UtcNow" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" form="createCatalogForm">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для редактирования -->
+<div id="editCatalogModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Catalog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCatalogForm">
+                    <input type="hidden" id="editCatalogId" name="id" />
+                    <div class="mb-3">
+                        <label for="editCatalogName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="editCatalogName" name="name" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCatalogDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editCatalogDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCatalogImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="editCatalogImage" name="image" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" form="editCatalogForm">Clear</button>
+                <button type="submit" class="btn btn-warning" form="editCatalogForm">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="successNotification" class="alert alert-success" role="alert">
+    Catalog created successfully!
+</div>
+
+<div id="editNotification" class="alert alert-warning" role="alert">
+    Catalog edited successfully!
+</div>
+
+<div id="deleteNotification" class="alert alert-delete" role="alert">
+    Catalog deleted successfully!
+</div>
