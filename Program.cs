@@ -17,10 +17,10 @@ namespace Fashion_Company
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Добавляем поддержку контроллеров с представлениями
+            // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ ГЇГ®Г¤Г¤ГҐГ°Г¦ГЄГі ГЄГ®Г­ГІГ°Г®Г«Г«ГҐГ°Г®Гў Г± ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГїГ¬ГЁ
             builder.Services.AddControllersWithViews();
 
-            // Добавление сервисов Session
+            // Г„Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ Г±ГҐГ°ГўГЁГ±Г®Гў Session
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
@@ -29,7 +29,7 @@ namespace Fashion_Company
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
 
-            // Добавляем службу для Entity Framework Core
+            // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г±Г«ГіГ¦ГЎГі Г¤Г«Гї Entity Framework Core
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -42,6 +42,9 @@ namespace Fashion_Company
                     options.AccessDeniedPath = "/User/AccessDenied";
                 });
 
+            var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(connectionString));
 
 
             builder.Services.AddAuthorization(options =>
@@ -49,11 +52,11 @@ namespace Fashion_Company
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
             });
 
-            var app = builder.Build(); //сервер для обработки HTTP-запросов
+            var app = builder.Build(); //Г±ГҐГ°ГўГҐГ° Г¤Г«Гї Г®ГЎГ°Г ГЎГ®ГІГЄГЁ HTTP-Г§Г ГЇГ°Г®Г±Г®Гў
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage(); // Покажет детальную информацию об ошибке
+                app.UseDeveloperExceptionPage(); // ГЏГ®ГЄГ Г¦ГҐГІ Г¤ГҐГІГ Г«ГјГ­ГіГѕ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ Г®ГЎ Г®ГёГЁГЎГЄГҐ
             }
             else
             {
@@ -62,22 +65,22 @@ namespace Fashion_Company
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); //папка wwwroot
+            app.UseStaticFiles(); //ГЇГ ГЇГЄГ  wwwroot
 
-            app.UseRouting(); //маршрутизация
+            app.UseRouting(); //Г¬Г Г°ГёГ°ГіГІГЁГ§Г Г¶ГЁГї
 
-            // Middleware для использования Session
+            // Middleware Г¤Г«Гї ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ Г­ГЁГї Session
             app.UseSession();
 
-            app.UseAuthentication(); // Добавляем аутентификацию
-            app.UseAuthorization(); // Добавляем авторизацию
+            app.UseAuthentication(); // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г ГіГІГҐГ­ГІГЁГґГЁГЄГ Г¶ГЁГѕ
+            app.UseAuthorization(); // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГѕ
 
-            // Регистрация маршрута по умолчанию
+            // ГђГҐГЈГЁГ±ГІГ°Г Г¶ГЁГї Г¬Г Г°ГёГ°ГіГІГ  ГЇГ® ГіГ¬Г®Г«Г·Г Г­ГЁГѕ
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            // Регистрация маршрута для каталогов по автору
+            // ГђГҐГЈГЁГ±ГІГ°Г Г¶ГЁГї Г¬Г Г°ГёГ°ГіГІГ  Г¤Г«Гї ГЄГ ГІГ Г«Г®ГЈГ®Гў ГЇГ® Г ГўГІГ®Г°Гі
             app.MapControllerRoute(
                 name: "catalogByAuthor",
                 pattern: "Catalog/ByAuthor",
