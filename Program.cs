@@ -17,10 +17,10 @@ namespace Fashion_Company
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Äîáàâëÿåì ïîääåðæêó êîíòðîëëåðîâ ñ ïðåäñòàâëåíèÿìè
+            // Добавляем поддержку контроллеров с представлениями
             builder.Services.AddControllersWithViews();
 
-            // Äîáàâëåíèå ñåðâèñîâ Session
+            // Добавление сервисов Session
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
@@ -28,12 +28,14 @@ namespace Fashion_Company
                 options.Cookie.IsEssential = true;
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
-            
+
+            // Добавляем службу для Entity Framework Core
             var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
                 ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString));
+
 
 
             builder.Services.AddAuthentication("Cookies")
@@ -43,16 +45,18 @@ namespace Fashion_Company
                     options.AccessDeniedPath = "/User/AccessDenied";
                 });
 
+
+
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
             });
 
-            var app = builder.Build(); //ñåðâåð äëÿ îáðàáîòêè HTTP-çàïðîñîâ
+            var app = builder.Build(); //сервер для обработки HTTP-запросов
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage(); // Ïîêàæåò äåòàëüíóþ èíôîðìàöèþ îá îøèáêå
+                app.UseDeveloperExceptionPage(); // Покажет детальную информацию об ошибке
             }
             else
             {
@@ -61,22 +65,22 @@ namespace Fashion_Company
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); //ïàïêà wwwroot
+            app.UseStaticFiles(); //папка wwwroot
 
-            app.UseRouting(); //ìàðøðóòèçàöèÿ
+            app.UseRouting(); //маршрутизация
 
-            // Middleware äëÿ èñïîëüçîâàíèÿ Session
+            // Middleware для использования Session
             app.UseSession();
 
-            app.UseAuthentication(); // Äîáàâëÿåì àóòåíòèôèêàöèþ
-            app.UseAuthorization(); // Äîáàâëÿåì àâòîðèçàöèþ
+            app.UseAuthentication(); // Добавляем аутентификацию
+            app.UseAuthorization(); // Добавляем авторизацию
 
-            // Ðåãèñòðàöèÿ ìàðøðóòà ïî óìîë÷àíèþ
+            // Регистрация маршрута по умолчанию
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            // Ðåãèñòðàöèÿ ìàðøðóòà äëÿ êàòàëîãîâ ïî àâòîðó
+            // Регистрация маршрута для каталогов по автору
             app.MapControllerRoute(
                 name: "catalogByAuthor",
                 pattern: "Catalog/ByAuthor",
