@@ -44,9 +44,9 @@ namespace Fashion_Company
                     options.AccessDeniedPath = "/User/AccessDenied";
                 });
 
-            var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+            // Добавляем службу для Entity Framework Core
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
             builder.Services.AddAuthorization(options =>
