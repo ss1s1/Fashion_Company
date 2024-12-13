@@ -36,18 +36,12 @@ namespace Fashion_Company
                 options.UseNpgsql(connectionString));
 
 
-
             builder.Services.AddAuthentication("Cookies")
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/User/Login";
                     options.AccessDeniedPath = "/User/AccessDenied";
                 });
-
-            // Добавляем службу для Entity Framework Core
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
             builder.Services.AddAuthorization(options =>
             {
